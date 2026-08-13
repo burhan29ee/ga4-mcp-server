@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ga4-mcp-server"
+version = "0.1.0"
+description = "A Google Analytics 4 MCP server with read AND write access: reports, realtime, custom dimensions/metrics, key events, audiences, and Measurement Protocol."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "Malik Burhan" }]
+keywords = ["mcp", "model-context-protocol", "google-analytics", "ga4", "analytics", "claude"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+dependencies = [
+  "mcp>=1.2,<2",
+  "google-analytics-data>=0.18",
+  "google-analytics-admin>=0.22",
+]
+
+[project.scripts]
+ga4-mcp-server = "ga4_mcp_server.server:main"
+
+[project.urls]
+Homepage = "https://github.com/OWNER/ga4-mcp-server"
+Issues = "https://github.com/OWNER/ga4-mcp-server/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ga4_mcp_server"]

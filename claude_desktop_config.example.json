@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "ga4": {
+      "command": "/absolute/path/to/ga4-mcp-server/.venv/bin/python",
+      "args": ["-m", "ga4_mcp_server.server"],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "/absolute/path/to/service-account-key.json"
+      }
+    }
+  }
+}
