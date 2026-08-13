@@ -1,5 +1,9 @@
 # ga4-mcp-server
 
+[![CI](https://github.com/burhan29ee/ga4-mcp-server/actions/workflows/ci.yml/badge.svg)](https://github.com/burhan29ee/ga4-mcp-server/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
+
 A [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server for **Google Analytics 4** with both **read and write** access. Connect it to Claude (or any MCP client) and pull reports, manage configuration, build remarketing audiences, and send server-side events — in natural language, using your own Google credentials. No third-party service, no subscription.
 
 Most GA4 MCP servers are read-only. This one also **writes**: it can create custom dimensions and metrics, mark conversions, **create audiences** (for remarketing lists you can share to Google Ads), and manage/use the **Measurement Protocol**.
@@ -39,7 +43,7 @@ That's it — no OAuth consent screen, no token refresh. The service account aut
 Using [uv](https://docs.astral.sh/uv/) (recommended — it manages an isolated Python for you):
 
 ```bash
-git clone https://github.com/OWNER/ga4-mcp-server.git
+git clone https://github.com/burhan29ee/ga4-mcp-server.git
 cd ga4-mcp-server
 uv venv --python 3.12 .venv
 uv pip install --python .venv/bin/python -e .
@@ -96,14 +100,19 @@ Restart the client. You should be able to ask things like *"list my GA4 properti
 | `delete_measurement_protocol_secret` | write | Delete an MP API secret |
 | `send_ga4_event` | write | Send an event via the Measurement Protocol |
 
+## Development
+
+```bash
+pip install -e ".[dev]"
+ruff check .
+pytest -q
+```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow.
+
 ## Security
 
-The service-account key is a credential — treat it like a password.
-
-- **Never commit it.** The included `.gitignore` blocks `*.json` (except the example config), `.env`, and key files, but keep your key outside the repo anyway.
-- Grant the service account the least access it needs (Viewer/Analyst if you only read).
-- If a key is ever exposed, delete it in Google Cloud (IAM → Service Accounts → Keys) and create a new one.
-- `send_ga4_event` writes data **into** your property. Use `validate=True` first to check payloads without ingesting them.
+The service-account key is a credential — treat it like a password. Never commit it (the `.gitignore` blocks key files), grant the service account the least access it needs, and rotate the key if it's ever exposed. See [SECURITY.md](SECURITY.md) for details and how to report a vulnerability.
 
 ## Notes
 
